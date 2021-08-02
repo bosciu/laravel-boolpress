@@ -2022,6 +2022,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Pagination",
   props: {
@@ -2030,10 +2038,12 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     nextPage: function nextPage() {
-      this.$emit("changePage", this.selectedPage + 1);
+      if (this.currentPage < this.pages) this.$emit("changePage", this.selectedPage + 1);
     },
     prevPage: function prevPage() {
-      this.$emit("changePage", this.selectedPage - 1);
+      if (this.currentPage > 1) {
+        this.$emit("changePage", this.selectedPage - 1);
+      }
     }
   },
   computed: {
@@ -3649,9 +3659,15 @@ var render = function() {
       "ul",
       { staticClass: "pagination pagination-lg justify-content-center py-3" },
       [
-        _c("li", { staticClass: "page-item", on: { click: _vm.prevPage } }, [
-          _vm._m(0)
-        ]),
+        _c(
+          "li",
+          {
+            staticClass: "page-item",
+            class: _vm.currentPage == 1 ? "disabled" : "",
+            on: { click: _vm.prevPage }
+          },
+          [_vm._m(0)]
+        ),
         _vm._v(" "),
         _vm._l(_vm.pages, function(page) {
           return _c(
@@ -3669,9 +3685,15 @@ var render = function() {
           )
         }),
         _vm._v(" "),
-        _c("li", { staticClass: "page-item", on: { click: _vm.nextPage } }, [
-          _vm._m(1)
-        ])
+        _c(
+          "li",
+          {
+            staticClass: "page-item",
+            class: _vm.currentPage == _vm.pages ? "disabled" : "",
+            on: { click: _vm.nextPage }
+          },
+          [_vm._m(1)]
+        )
       ],
       2
     )
