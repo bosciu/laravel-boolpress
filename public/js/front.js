@@ -2030,6 +2030,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Pagination",
   props: {
@@ -2043,6 +2044,11 @@ __webpack_require__.r(__webpack_exports__);
     prevPage: function prevPage() {
       if (this.currentPage > 1) {
         this.$emit("changePage", this.selectedPage - 1);
+      }
+    },
+    changePage: function changePage(page) {
+      if (page > 0 && page <= this.pages) {
+        this.$emit("changePage", page);
       }
     }
   },
@@ -2301,7 +2307,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, ".card[data-v-494f2c35] {\n  padding: 10px;\n  width: calc(100% / 4 - 30px);\n  margin: 15px;\n}", ""]);
+exports.push([module.i, ".card[data-v-494f2c35] {\n  padding: 10px;\n  width: calc(100% / 4 - 30px);\n  margin: 15px;\n}\n.card h3[data-v-494f2c35] {\n  height: 200px;\n}", ""]);
 
 // exports
 
@@ -3675,7 +3681,12 @@ var render = function() {
             {
               key: page,
               staticClass: "page-item",
-              class: _vm.selectedPage == page ? "active" : ""
+              class: _vm.selectedPage == page ? "active" : "",
+              on: {
+                click: function($event) {
+                  return _vm.changePage(page)
+                }
+              }
             },
             [
               _c("button", { staticClass: "page-link", attrs: { href: "#" } }, [

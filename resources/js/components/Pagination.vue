@@ -16,6 +16,7 @@
                 :class="selectedPage == page ? 'active' : ''"
                 v-for="page in pages"
                 :key="page"
+                @click="changePage(page)"
             >
                 <button class="page-link" href="#">{{ page }}</button>
             </li>
@@ -48,6 +49,11 @@ export default {
         prevPage() {
             if (this.currentPage > 1) {
                 this.$emit("changePage", this.selectedPage - 1);
+            }
+        },
+        changePage(page) {
+            if (page > 0 && page <= this.pages) {
+                this.$emit("changePage", page);
             }
         }
     },

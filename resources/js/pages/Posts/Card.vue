@@ -32,5 +32,8 @@ export default {
     padding: 10px;
     width: calc(100% / 4 - 30px);
     margin: 15px;
+    h3 {
+        height: 200px;
+    }
 }
 </style>
