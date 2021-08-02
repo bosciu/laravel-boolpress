@@ -25,11 +25,14 @@ ul {
     list-style: none;
     li {
         display: inline-block;
-        padding: 10px 15px;
-        margin: 0 10px;
-        cursor: pointer;
-        &.active {
-            background-color: var(--blue);
+        a {
+            padding: 10px 15px;
+            margin: 0 10px;
+            cursor: pointer;
+            color: unset;
+            &.router-link-exact-active {
+                background-color: var(--blue);
+            }
         }
     }
 }

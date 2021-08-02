@@ -1,7 +1,7 @@
 <template>
     <section class="posts">
         <h2 class="text-center mt-5">Elenco Posts</h2>
-        <div class="card-container">
+        <div class="container d-flex">
             <Card v-for="post in posts" :key="post.id" :post="post" />
         </div>
         <Pagination :pages="pages" />
@@ -41,8 +41,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.card-container {
-    display: flex;
+.container {
     flex-wrap: wrap;
     justify-content: center;
 }
