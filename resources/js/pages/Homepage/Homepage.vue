@@ -1,19 +1,21 @@
 <template>
-    <div>
-        <h1 class="text-center py-5">Boolpress</h1>
-        <Navbar />
-        <Main :posts="posts" :pages="pages" />
-    </div>
+    <section class="posts">
+        <h2 class="text-center mt-5">Elenco Posts</h2>
+        <div class="card-container">
+            <Card v-for="post in posts" :key="post.id" :post="post" />
+        </div>
+        <Pagination :pages="pages" />
+    </section>
 </template>
 
 <script>
-import Navbar from "../components/Navbar";
-import Main from "./main/Main";
+import Pagination from "../../components/Pagination";
+import Card from "./Card";
 export default {
     name: "Homepage",
     components: {
-        Navbar,
-        Main
+        Pagination,
+        Card
     },
     data() {
         return {
@@ -38,4 +40,10 @@ export default {
 };
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+</style>

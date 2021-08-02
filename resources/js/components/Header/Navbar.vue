@@ -1,7 +1,7 @@
 <template>
     <nav class="text-center">
         <ul>
-            <li>Home</li>
+            <li class="active">Home</li>
             <li>Chi siamo</li>
             <li>Contatti</li>
         </ul>
@@ -21,8 +21,10 @@ ul {
         display: inline-block;
         padding: 10px 15px;
         margin: 0 10px;
-        background-color: var(--blue);
         cursor: pointer;
+        &.active {
+            background-color: var(--blue);
+        }
     }
 }
 </style>
