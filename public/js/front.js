@@ -2017,10 +2017,29 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Pagination",
   props: {
-    pages: Number
+    pages: Number,
+    currentPage: Number
+  },
+  methods: {
+    nextPage: function nextPage() {
+      this.$emit("changePage", this.selectedPage + 1);
+    },
+    prevPage: function prevPage() {
+      this.$emit("changePage", this.selectedPage - 1);
+    }
+  },
+  computed: {
+    selectedPage: function selectedPage() {
+      return this.currentPage;
+    }
   }
 });
 
@@ -2131,6 +2150,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2142,19 +2165,34 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       posts: [],
-      pages: null
+      pages: null,
+      currentPage: undefined
     };
   },
   methods: {
     getPosts: function getPosts() {
       var _this = this;
 
-      axios.get("http://127.0.0.1:8000/api/posts").then(function (res) {
+      var currentPage = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+      axios.get("http://127.0.0.1:8000/api/posts", {
+        params: {
+          page: currentPage
+        }
+      }).then(function (res) {
         _this.posts = res.data.data;
         _this.pages = res.data.last_page;
+        _this.currentPage = res.data.current_page;
       })["catch"](function (err) {
         return console.log(err);
       });
+    },
+    saveCurrentPage: function saveCurrentPage(currentPage) {
+      this.currentPage = currentPage;
+    }
+  },
+  watch: {
+    currentPage: function currentPage() {
+      this.getPosts(this.currentPage);
     }
   },
   created: function created() {
@@ -3611,17 +3649,29 @@ var render = function() {
       "ul",
       { staticClass: "pagination pagination-lg justify-content-center py-3" },
       [
-        _vm._m(0),
+        _c("li", { staticClass: "page-item", on: { click: _vm.prevPage } }, [
+          _vm._m(0)
+        ]),
         _vm._v(" "),
-        _vm._l(_vm.pages, function(page, index) {
-          return _c("li", { key: index, staticClass: "page-item" }, [
-            _c("button", { staticClass: "page-link", attrs: { href: "#" } }, [
-              _vm._v(_vm._s(page))
-            ])
-          ])
+        _vm._l(_vm.pages, function(page) {
+          return _c(
+            "li",
+            {
+              key: page,
+              staticClass: "page-item",
+              class: _vm.selectedPage == page ? "active" : ""
+            },
+            [
+              _c("button", { staticClass: "page-link", attrs: { href: "#" } }, [
+                _vm._v(_vm._s(page))
+              ])
+            ]
+          )
         }),
         _vm._v(" "),
-        _vm._m(1)
+        _c("li", { staticClass: "page-item", on: { click: _vm.nextPage } }, [
+          _vm._m(1)
+        ])
       ],
       2
     )
@@ -3632,39 +3682,32 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("li", { staticClass: "page-item" }, [
-      _c(
-        "button",
-        {
-          staticClass: "page-link",
-          attrs: { href: "#", "aria-label": "Previous" }
-        },
-        [
-          _c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("«")]),
-          _vm._v(" "),
-          _c("span", { staticClass: "sr-only" }, [_vm._v("Previous")])
-        ]
-      )
-    ])
+    return _c(
+      "button",
+      {
+        staticClass: "page-link",
+        attrs: { href: "#", "aria-label": "Previous" }
+      },
+      [
+        _c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("«")]),
+        _vm._v(" "),
+        _c("span", { staticClass: "sr-only" }, [_vm._v("Previous")])
+      ]
+    )
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("li", { staticClass: "page-item" }, [
-      _c(
-        "button",
-        {
-          staticClass: "page-link",
-          attrs: { href: "#", "aria-label": "Next" }
-        },
-        [
-          _c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("»")]),
-          _vm._v(" "),
-          _c("span", { staticClass: "sr-only" }, [_vm._v("Next")])
-        ]
-      )
-    ])
+    return _c(
+      "button",
+      { staticClass: "page-link", attrs: { href: "#", "aria-label": "Next" } },
+      [
+        _c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("»")]),
+        _vm._v(" "),
+        _c("span", { staticClass: "sr-only" }, [_vm._v("Next")])
+      ]
+    )
   }
 ]
 render._withStripped = true
@@ -3818,7 +3861,10 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _c("Pagination", { attrs: { pages: _vm.pages } })
+      _c("Pagination", {
+        attrs: { pages: _vm.pages, currentPage: _vm.currentPage },
+        on: { changePage: _vm.saveCurrentPage }
+      })
     ],
     1
   )

@@ -4,7 +4,11 @@
         <div class="container d-flex">
             <Card v-for="post in posts" :key="post.id" :post="post" />
         </div>
-        <Pagination :pages="pages" />
+        <Pagination
+            :pages="pages"
+            :currentPage="currentPage"
+            @changePage="saveCurrentPage"
+        />
     </section>
 </template>
 
@@ -20,18 +24,32 @@ export default {
     data() {
         return {
             posts: [],
-            pages: null
+            pages: null,
+            currentPage: undefined
         };
     },
     methods: {
-        getPosts() {
+        getPosts(currentPage = 1) {
             axios
-                .get("http://127.0.0.1:8000/api/posts")
+                .get("http://127.0.0.1:8000/api/posts", {
+                    params: {
+                        page: currentPage
+                    }
+                })
                 .then(res => {
                     this.posts = res.data.data;
                     this.pages = res.data.last_page;
+                    this.currentPage = res.data.current_page;
                 })
                 .catch(err => console.log(err));
+        },
+        saveCurrentPage(currentPage) {
+            this.currentPage = currentPage;
+        }
+    },
+    watch: {
+        currentPage() {
+            this.getPosts(this.currentPage);
         }
     },
     created() {
