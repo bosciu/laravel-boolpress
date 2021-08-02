@@ -1,9 +1,15 @@
 <template>
     <nav class="text-center">
         <ul>
-            <li class="active">Home</li>
-            <li>Chi siamo</li>
-            <li>Contatti</li>
+            <li>
+                <router-link to="/">Home</router-link>
+            </li>
+            <li>
+                <router-link to="/posts">Posts</router-link>
+            </li>
+            <li>
+                <router-link to="/contacts">Contatti</router-link>
+            </li>
         </ul>
     </nav>
 </template>
