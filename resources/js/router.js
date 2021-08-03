@@ -6,6 +6,7 @@ import Homepage from "./pages/Homepage/Homepage";
 import Posts from "./pages/Posts/Posts";
 import Contact from "./pages/Contact/Contact";
 import SinglePost from "./pages/SinglePost/SinglePost";
+import ErrorPage from "./pages/ErrorPage/ErrorPage";
 
 const router = new VueRouter({
     mode: "history",
@@ -28,6 +29,11 @@ const router = new VueRouter({
             path: "/posts/:slug",
             name: "singlePost",
             component: SinglePost
+        },
+        {
+            path: "*",
+            name: "errorPage",
+            component: ErrorPage
         }
     ]
 });
