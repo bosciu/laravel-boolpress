@@ -2,14 +2,14 @@
 
 @section('content')
 <div class="container py-4">
+    @if (session('update'))
+            <div class="alert alert-success">Il post {{session('update')}} è stato modificato con successo</div>
+            @endif
     <div class="row">
         <div class="col-6">
             <img class="img-fluid" src="{{asset('storage\/') . $post->cover}}" alt="">
         </div>
         <div class="col-6">
-            @if (session('update'))
-            <div class="alert alert-success">Il post {{session('update')}} è stato modificato con successo</div>
-            @endif
             <h1>Titolo</h1>
             <h2 class="mb-5">{{$post->title}}</h2>
             <h3>Autore</h3>
