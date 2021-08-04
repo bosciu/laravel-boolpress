@@ -118,7 +118,9 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         $post->tags()->detach();
-        Storage::delete($post->cover);
+        if($post->cover){
+            Storage::delete($post->cover);
+        }
         $post->delete();
         return redirect()->route('admin.posts.index')->with('deleted', $post->title);
     }

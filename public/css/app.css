@@ -10942,3 +10942,15 @@ a.text-dark:focus {
   }
 }
 
+.posts-img-container {
+  height: 250px;
+}
+
+.posts-img-container img {
+  height: 100%;
+}
+
+.posts-show-container img {
+  width: 100%;
+}
+

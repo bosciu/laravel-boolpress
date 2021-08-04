@@ -34,8 +34,11 @@
         </div>
         <div class="mb-3">
           <div class="form-group">
-            <label for="cover">Inserisci un'immagine</label>
-            <input type="file" class="form-control-file" id="cover" name="cover">
+            <label for="imgInp">Inserisci un'immagine</label>
+            <input type="file" class="form-control-file" id="imgInp" name="cover">
+            <div class="posts-img-container mt-3">
+              <img src="{{asset('storage/covers/default.jpg')}}" id="edit-image">
+            </div>
           </div>
           @error('cover')
             <div class="invalid-feedback mt-1">{{ $message }}</div> 
@@ -62,5 +65,15 @@
         </div>
         <button type="submit" class="btn btn-primary">Invia</button>
       </form>
+      <script>
+        const imgInp = document.getElementById('imgInp');
+        const editImage = document.getElementById('edit-image');
+        imgInp.onchange = ()=>{
+          const [image] = imgInp.files
+          if (image) {
+          editImage.src = URL.createObjectURL(image)
+        }
+        }
+      </script>
 </div>
 @endsection

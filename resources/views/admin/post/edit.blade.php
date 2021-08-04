@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container py-4">
+<div class="container py-4" id="post-edit">
   <a href="{{route('admin.posts.index')}}" class="btn btn-secondary mb-3">Indietro</a>
     <h1>Pagina modifica</h1>
     <form action="{{route('admin.posts.update', $post)}}" method="POST">
@@ -34,6 +34,22 @@
           @enderror
         </div>
         <div class="mb-3">
+          <div class="form-group">
+            <label for="imgInp">Sostituisci l'immagine</label>
+            <input type="file" class="form-control-file" id="imgInp" name="cover">
+            <div class="posts-img-container mt-3">
+              @if ($post->cover)
+                <img src="{{asset('storage\/') . $post->cover}}" alt="{{$post->title}}" class="img-fluid" id="edit-image"> 
+              @else
+                <img src="{{asset('storage/covers/default.jpg')}}" alt="default-image" class="img-fluid" id="edit-image"> 
+              @endif
+            </div>
+          </div>
+          @error('cover')
+            <div class="invalid-feedback mt-1">{{ $message }}</div> 
+          @enderror
+        </div>
+        <div class="mb-3">
           <div class="form-label mb-2">Tag</div>
           <div class="form-check form-check-inline">
             @if ($errors->any())
@@ -62,4 +78,14 @@
         <button type="submit" class="btn btn-primary">Invia</button>
       </form>
 </div>
+<script>
+  const imgInp = document.getElementById('imgInp');
+  const editImage = document.getElementById('edit-image');
+  imgInp.onchange = () => {
+  const [image] = imgInp.files
+  if (image) {
+    editImage.src = URL.createObjectURL(image)
+  }
+}
+</script>
 @endsection

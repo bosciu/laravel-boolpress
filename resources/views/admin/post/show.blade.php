@@ -7,7 +7,13 @@
             @endif
     <div class="row">
         <div class="col-6">
-            <img class="img-fluid" src="{{asset('storage\/') . $post->cover}}" alt="">
+            <div class="posts-show-container">
+                @if ($post->cover)
+                    <img class="img-fluid" src="{{asset('storage\/') . $post->cover}}" alt="{{$post->title}}">
+                @else
+                    <img class="img-fluid" src="{{asset('storage/covers/default.jpg')}}" alt="Default">
+                @endif
+            </div>
         </div>
         <div class="col-6">
             <h1>Titolo</h1>
