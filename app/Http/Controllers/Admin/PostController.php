@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 use App\Post;
 use App\Category;
@@ -16,7 +17,8 @@ class PostController extends Controller
         'author' => 'max:150',
         'content' => 'required',
         'category_id' => 'exists:categories,id|nullable',
-        'tags_id' => 'exists:tags,id'
+        'tags_id' => 'exists:tags,id',
+        'cover' => 'mimes:jpeg,png,jpg,gif,svg|nullable|max:10240'
     ];
     /**
      * Display a listing of the resource.
@@ -51,6 +53,7 @@ class PostController extends Controller
     {   
         $request->validate($this->validationArray);
         $data = $request->all();
+        $data['cover']=Storage::put('covers', $data['cover']);
         $data['slug'] = Str::of($data['title'])->slug();
         $newPost = new Post();
         $newPost->fill($data);

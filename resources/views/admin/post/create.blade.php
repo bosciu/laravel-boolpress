@@ -3,7 +3,7 @@
 @section('content')
 <div class="container py-4">
     <h1>Pagina creazione</h1>
-    <form action="{{route('admin.posts.store')}}" method="POST">
+    <form action="{{route('admin.posts.store')}}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('POST')
         <div class="mb-3">
@@ -29,6 +29,15 @@
             @endforeach
           </select>
           @error('category_id')
+            <div class="invalid-feedback mt-1">{{ $message }}</div> 
+          @enderror
+        </div>
+        <div class="mb-3">
+          <div class="form-group">
+            <label for="cover">Inserisci un'immagine</label>
+            <input type="file" class="form-control-file" id="cover" name="cover">
+          </div>
+          @error('cover')
             <div class="invalid-feedback mt-1">{{ $message }}</div> 
           @enderror
         </div>
