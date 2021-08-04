@@ -2146,17 +2146,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Card",
   props: {
     post: Object
   },
-  computed: {
-    textCut: function textCut() {
-      if (this.post.content.length > 80) {
-        return this.post.content.slice(0, 80) + " ...";
+  methods: {
+    textCut: function textCut(string, length) {
+      if (string.length > length) {
+        return string.slice(0, length) + "...";
       } else {
-        return this.post.content;
+        return string;
       }
     }
   }
@@ -2279,6 +2282,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "SinglePost",
@@ -2347,7 +2360,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, ".card[data-v-494f2c35] {\n  padding: 10px;\n  width: calc(100% / 4 - 30px);\n  margin: 15px;\n}\n.card h3[data-v-494f2c35] {\n  height: 200px;\n}", ""]);
+exports.push([module.i, ".card[data-v-494f2c35] {\n  padding: 10px;\n  width: calc(100% / 4 - 30px);\n  margin: 15px;\n}\n.card .img-container[data-v-494f2c35] {\n  width: 100%;\n  height: 200px;\n  margin: 20px 0;\n}\n.card .img-container img[data-v-494f2c35] {\n  width: 100%;\n  height: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n  -o-object-position: center;\n     object-position: center;\n}\n.card h3[data-v-494f2c35] {\n  height: 100px;\n}", ""]);
 
 // exports
 
@@ -3904,11 +3917,15 @@ var render = function() {
     "div",
     { staticClass: "card" },
     [
-      _c("h3", [_vm._v(_vm._s(_vm.post.title))]),
+      _c("h3", [_vm._v(_vm._s(_vm.textCut(_vm.post.title, 40)))]),
+      _vm._v(" "),
+      _c("div", { staticClass: "img-container" }, [
+        _c("img", { attrs: { src: _vm.post.cover, alt: _vm.post.title } })
+      ]),
       _vm._v(" "),
       _c("h4", [_vm._v(_vm._s(_vm.post.author))]),
       _vm._v(" "),
-      _c("p", [_vm._v(_vm._s(_vm.textCut))]),
+      _c("p", [_vm._v(_vm._s(_vm.textCut(_vm.post.content, 80)))]),
       _vm._v(" "),
       _c(
         "router-link",
@@ -3996,6 +4013,15 @@ var render = function() {
           "div",
           { staticClass: "container py-5", attrs: { id: "single-post" } },
           [
+            _c(
+              "router-link",
+              {
+                staticClass: "btn btn-secondary mb-5",
+                attrs: { to: "/posts" }
+              },
+              [_vm._v("Indietro")]
+            ),
+            _vm._v(" "),
             _c("h1", { staticClass: "text-center pb-5" }, [
               _vm._v(_vm._s(_vm.post.title))
             ]),
@@ -4012,18 +4038,30 @@ var render = function() {
                 ])
               : _vm._e(),
             _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "tags" },
-              _vm._l(_vm.post.tags, function(tag) {
-                return _c(
-                  "span",
-                  { key: tag.id, staticClass: "badge rounded-pill bg-primary" },
-                  [_vm._v(_vm._s(tag.name))]
+            _vm.post.tags.length > 0
+              ? _c(
+                  "div",
+                  { staticClass: "tags" },
+                  _vm._l(_vm.post.tags, function(tag) {
+                    return _c(
+                      "span",
+                      {
+                        key: tag.id,
+                        staticClass: "badge rounded-pill bg-primary"
+                      },
+                      [_vm._v(_vm._s(tag.name))]
+                    )
+                  }),
+                  0
                 )
-              }),
-              0
-            ),
+              : _vm._e(),
+            _vm._v(" "),
+            _c("div", { staticClass: "d-flex justify-content-center" }, [
+              _c("img", {
+                staticClass: "img-fluid my-3",
+                attrs: { src: _vm.post.cover, alt: _vm.post.title }
+              })
+            ]),
             _vm._v(" "),
             _c("p", [
               _vm._v("\n            " + _vm._s(_vm.post.content) + "\n        ")

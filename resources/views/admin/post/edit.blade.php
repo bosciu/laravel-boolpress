@@ -4,7 +4,7 @@
 <div class="container py-4" id="post-edit">
   <a href="{{route('admin.posts.index')}}" class="btn btn-secondary mb-3">Indietro</a>
     <h1>Pagina modifica</h1>
-    <form action="{{route('admin.posts.update', $post)}}" method="POST">
+    <form action="{{route('admin.posts.update', $post)}}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <div class="mb-3">

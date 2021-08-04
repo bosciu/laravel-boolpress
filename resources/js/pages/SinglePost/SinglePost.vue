@@ -6,18 +6,28 @@
             class="container py-5"
             v-else-if="isLoaded && postFind"
         >
+            <router-link to="/posts" class="btn btn-secondary mb-5"
+                >Indietro</router-link
+            >
             <h1 class="text-center pb-5">{{ post.title }}</h1>
             <h2 class="pb-5">Autore : {{ post.author }}</h2>
             <h4 v-if="post.category">
                 <span class="badge bg-secondary">{{ post.category.name }}</span>
             </h4>
-            <div class="tags">
+            <div class="tags" v-if="post.tags.length > 0">
                 <span
                     class="badge rounded-pill bg-primary"
                     v-for="tag in post.tags"
                     :key="tag.id"
                     >{{ tag.name }}</span
                 >
+            </div>
+            <div class="d-flex justify-content-center">
+                <img
+                    class="img-fluid my-3"
+                    :src="post.cover"
+                    :alt="post.title"
+                />
             </div>
             <p>
                 {{ post.content }}

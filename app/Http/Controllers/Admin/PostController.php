@@ -53,7 +53,9 @@ class PostController extends Controller
     {   
         $request->validate($this->validationArray);
         $data = $request->all();
-        $data['cover']=Storage::put('covers', $data['cover']);
+        if(array_key_exists('cover', $data)){
+            $data['cover']=Storage::put('covers', $data['cover']);
+        }
         $data['slug'] = Str::of($data['title'])->slug();
         $newPost = new Post();
         $newPost->fill($data);
@@ -100,6 +102,9 @@ class PostController extends Controller
         $request->validate($this->validationArray);
         $data = $request->all();
         $data['slug'] = Str::of($data['title'])->slug();
+        if(array_key_exists('cover', $data)){
+            $data['cover'] = Storage::put('covers', $data['cover']);
+        }
         $post->update($data);
         if(array_key_exists('tags_id', $data)){
             $post->tags()->sync($data['tags_id']);
